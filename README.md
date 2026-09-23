@@ -6,6 +6,7 @@ A post-install setup script for a minimal Arch Linux desktop built on DWM, start
 
 ## Table of Contents
 
+- [Step 0 — Booting the Arch ISO and Preparing the Disk](#step-0-booting-the-arch-iso-and-preparing-the-disk)
 - [Step 1 — Installing Arch with archinstall](#step-1--installing-arch-with-archinstall)
 - [Step 2 — Cloning the Repo and Running the Script](#step-2--cloning-the-repo-and-running-the-script)
 - [What the Script Does — Section by Section](#what-the-script-does--section-by-section)
@@ -15,6 +16,153 @@ A post-install setup script for a minimal Arch Linux desktop built on DWM, start
 - [After Install](#after-install)
 
 ---
+
+## Step 0 — Booting the Arch ISO and Preparing the Disk
+
+## Making a Bootable usb with ventoy
+
+### 1. Download Ventoy
+
+Download Ventoy 1.1.17:
+
+[Download Ventoy 1.1.17](https://deac-ams.dl.sourceforge.net/project/ventoy/v1.1.17/ventoy-1.1.17-linux.tar.gz?viasf=1&fid=0106a9c69f57a6b7&e=1790269796&st=VGhQHHWO5lCfzq8K-IBLuQ)
+
+Extract the archive:
+
+```bash
+tar -xzf ventoy-1.1.17-linux.tar.gz
+```
+
+Enter the extracted directory:
+
+```bash
+cd ventoy-1.1.17
+```
+
+---
+
+### 2. Run Ventoy GUI
+
+Start the GUI:
+
+```bash
+./VentoyGUI.x86_64
+```
+
+If required:
+
+```bash
+sudo ./VentoyGUI.x86_64
+```
+
+Select your USB drive from the GUI and click **Install**.
+
+> ⚠️ Make sure you select the correct USB drive. Installing Ventoy will erase the selected USB drive.
+
+---
+
+### 3. Download Arch Linux ISO
+
+Go to the official Arch Linux download page:
+
+[Download Arch Linux](https://archlinux.org/download/)
+
+Download the latest **Arch Linux ISO**.
+
+---
+
+### 4. Copy Arch ISO to Ventoy USB
+
+After Ventoy is installed, your USB will appear as a normal storage device.
+
+Simply copy the downloaded Arch ISO to the Ventoy USB:
+
+```text
+Ventoy USB/
+└── archlinux-x86_64.iso
+```
+
+You **do not need to extract the ISO**.
+
+---
+
+### 4. Boot from the Arch USB
+
+Plug the Arch Linux bootable USB into your computer and restart it.
+
+During startup, open the **Boot Menu** by pressing the boot-menu key repeatedly. The key depends on your motherboard/laptop. Common keys are:
+
+- `F12`
+- `F9`
+- `F11`
+- `Esc`
+
+Select the **Arch Linux USB** from the boot menu and press `Enter`.
+
+Once the Arch ISO boots successfully, you will be presented with the Arch Linux terminal.
+
+### 5. Update the package database
+
+First, synchronize the package databases:
+
+```bash
+pacman -Sy
+```
+
+### 6. Install the required packages
+
+Install the Arch Linux keyring and `archinstall`:
+
+```bash
+pacman -S archlinux-keyring archinstall
+```
+
+These packages provide the updated Arch package signing keys and the `archinstall` guided installer.
+
+### 7. Identify the target disk
+
+Before modifying any disk, check the available drives and partitions:
+
+```bash
+lsblk
+```
+
+Identify the disk where Arch Linux will be installed.
+
+> **Important:** Make sure you select the correct disk. The following step will remove the existing partition table from the selected drive.
+
+### 8. Clear the existing partition table
+
+Open `gdisk` for the target disk:
+
+```bash
+gdisk /dev/<partition_name>
+```
+
+For example:
+
+```bash
+gdisk /dev/nvme0n1
+```
+
+Inside `gdisk`:
+
+1. Press `x` and press `Enter` to enter the expert menu.
+2. Press `z` and press `Enter` to start wiping the GPT/MBR partition table.
+3. Confirm with `y`.
+4. Confirm again with `y` when prompted to destroy the partition table.
+
+After this, the selected drive will be ready for the Arch installation.
+
+### 9. Start the Arch installer
+
+Once the disk has been prepared, launch the guided Arch installer:
+
+```bash
+archinstall
+```
+
+Continue with **Step 1 — Installing Arch with archinstall** below.
 
 ## Step 1 — Installing Arch with archinstall
 
