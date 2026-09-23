@@ -466,6 +466,7 @@ echo -e "${YELLOW}[7/8] Installing programming + terminal toolchain...${RESET}"
 sudo pacman -S --needed --noconfirm \
   vim \
   neovim \
+  lazygit \
   imagemagick \
   gcc \
   clang \
