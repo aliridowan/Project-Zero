@@ -274,15 +274,15 @@ ping archlinux.org
 Clone the repo:
 
 ```bash
-git clone https://github.com/NOTHING-R/Arch-Dwm-Install-Script.git
-cd Arch-Dwm-Install-Script
+git clone https://github.com/aliridowan/Project-Zero
+cd Project-Zero 
 ```
 
 Make the script executable and run it:
 
 ```bash
-chmod +x install.sh
-./install.sh
+chmod +x projectZero.sh
+./projectZero.sh
 ```
 
 The script will take 10–20 minutes depending on your internet speed. When it finishes you will see:
